@@ -25,7 +25,7 @@ abstract class Kitsune extends Spirit {
 		array_pop($chunkedArray);
 				
 		foreach($chunkedArray as $rawData) {
-			Logger::Debug("Received $data");
+			Logger::Debug("Received $rawData");
 
 			$packet = Packet::Parse($rawData);
 					
