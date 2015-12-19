@@ -30,13 +30,13 @@ final class Events {
 	}
 
 	public static function ResetInterval($eventIndex) {
-		if(array_key_exists(self::$timedEvents, $eventIndex)) {
+		if(array_key_exists($eventIndex, self::$timedEvents)) {
 			self::$timedEvents[$eventIndex][2] = time();
 		}
 	}
 
 	public static function RemoveInterval($eventIndex) {
-		if(array_key_exists(self::$timedEvents, $eventIndex)) {
+		if(array_key_exists($eventIndex, self::$timedEvents)) {
 			unset(self::$timedEvents[$eventIndex]);
 
 			return true;
