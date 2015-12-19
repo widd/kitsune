@@ -11,7 +11,7 @@ final class Events {
 
 	/* Values are arrays
 	Arrays consist of three elements:
-	Callback, interval, and the last time it was called
+	Callable, interval, and the last time it was called
 	*/
 	private static $timedEvents = array();
 
@@ -35,9 +35,9 @@ final class Events {
 		}
 	}
 
-	public static function RemoveInterval($callbackIndex) {
-		if(array_key_exists(self::$timedEvents, $callbackIndex)) {
-			unset(self::$timedEvents[$callbackIndex]);
+	public static function RemoveInterval($eventIndex) {
+		if(array_key_exists(self::$timedEvents, $eventIndex)) {
+			unset(self::$timedEvents[$eventIndex]);
 
 			return true;
 		} else {
@@ -46,34 +46,34 @@ final class Events {
 	}
 
 	// Interval in seconds
-	public static function AppendInterval($interval, $callback) {
-		array_push(self::$timedEvents, [$callback, $interval, null]);
+	public static function AppendInterval($interval, $callable) {
+		array_push(self::$timedEvents, [$callable, $interval, null]);
 
-		$callbackIndex = array_search($callback, self::$timedEvents);
-		return $callbackIndex;
+		$eventIndex = array_search($callable, self::$timedEvents);
+		return $eventIndex;
 	}
 
-	// Adds event and/or event callback
-	public static function Append($event, $callback) {
+	// Adds event and/or event callable
+	public static function Append($event, $callable) {
 		if(array_key_exists($event, self::$events)) {
-			array_push(self::$events, $callback);
+			array_push(self::$events, $callable);
 		} else {
-			self::$events = array($callback);
+			self::$events = array($callable);
 		}
 
-		$callbackIndex = array_search($callback, self::$events);
+		$callableIndex = array_search($callable, self::$events);
 
-		return $callbackIndex;
+		return $callableIndex;
 	}
 
-	// Removes event, or event callback (by index)
-	public static function Remove($event, $callbackIndex = null) {
+	// Removes event, or event callable (by index)
+	public static function Remove($event, $callableIndex = null) {
 		if(array_key_exists($event, self::$events)) {
-			if($callbackIndex === null) {
+			if($callableIndex === null) {
 				unset(self::$events[$event]);
 			} else {
-				if(array_key_exists($callbackIndex, self::$events[$event])){
-					unset(self::$events[$event][$callbackIndex]);
+				if(array_key_exists($callableIndex, self::$events[$event])){
+					unset(self::$events[$event][$callableIndex]);
 				} else {
 					return false;
 				}
@@ -86,8 +86,8 @@ final class Events {
 	}
 
 	public static function Fire($event, $data = null) {
-		foreach(self::$events as $eventCallback) {
-			call_user_func($eventCallback, $data);
+		foreach(self::$events as $eventcallable) {
+			call_user_func($eventcallable, $data);
 		}
 	}
 
