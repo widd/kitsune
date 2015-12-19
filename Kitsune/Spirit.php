@@ -34,14 +34,16 @@ abstract class Spirit {
 	}
 
 	protected function removeClient($socket) {
-		Events::Fire("disconnected", $socket);
-
+		Events::Fire("disconnect", $socket);
+		
 		$client = array_search($socket, $this->sockets);
 		unset($this->sockets[$client]);
 
 		if(is_resource($socket)) {
 			socket_close($socket);
 		}
+
+		Events::Fire("disconnected", $socket);
 	}
 
 	public function listen($address, $port, $backlog = 25, $throwException = false) {
