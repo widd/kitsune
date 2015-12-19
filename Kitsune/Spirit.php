@@ -67,8 +67,18 @@ abstract class Spirit {
 	}
 
 	public function acceptClients() {
+		foreach(Events::GetTimedEvents() as $eventIndex => $timedEvent) {
+			list($callable, $interval, $lastCall) = $timedEvent;
+
+			if((time() - $interval) >= $lastCall) {
+				call_user_func($callable, $this);
+
+				Events::ResetInterval($eventIndex);
+			}
+		}
+
 		$sockets = array_merge(array($this->masterSocket), $this->sockets);
-		$changedSockets = socket_select($sockets, $write, $except, 5);
+		$changedSockets = socket_select($sockets, $write, $except, 1);
 		
 		if($changedSockets === 0) {
 			return false;
