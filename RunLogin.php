@@ -18,16 +18,6 @@ spl_autoload_register(function ($path) {
 
 $cp = new Login();
 
-// A simple example of binding to multiple ports and/or addresses
-
-/*
-try {
-	$cp->listen(["127.0.0.1", "192.168.1.159"], [6112, 7432]);
-} catch(BindException $exception) {
-	echo $exception->getMessage(), "\n";
-}
-*/
-
 $cp->listen(0, 6112);
 
 while(true) {
