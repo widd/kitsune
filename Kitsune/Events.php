@@ -58,7 +58,7 @@ final class Events {
 		if(array_key_exists($event, self::$events)) {
 			array_push(self::$events, $callable);
 		} else {
-			self::$events = array($callable);
+			self::$events[$event] = array($callable);
 		}
 
 		$callableIndex = array_search($callable, self::$events);
@@ -86,8 +86,10 @@ final class Events {
 	}
 
 	public static function Fire($event, $data = null) {
-		foreach(self::$events as $eventcallable) {
-			call_user_func($eventcallable, $data);
+		if(array_key_exists($event, self::$events)) {
+			foreach(self::$events[$event] as $eventCallable) {
+				call_user_func($eventCallable, $data);
+			}
 		}
 	}
 
