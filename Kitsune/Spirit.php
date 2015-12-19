@@ -34,6 +34,8 @@ abstract class Spirit {
 	}
 
 	protected function removeClient($socket) {
+		Events::Fire("disconnected", $socket);
+
 		$client = array_search($socket, $this->sockets);
 		unset($this->sockets[$client]);
 
