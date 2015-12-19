@@ -71,9 +71,9 @@ abstract class Spirit {
 		foreach(Events::GetTimedEvents() as $eventIndex => $timedEvent) {
 			list($callable, $interval, $lastCall) = $timedEvent;
 
-			if((time() - $interval) <= $lastCall && $lastCall == null) {
+			if((time() - $interval) < $lastCall && $lastCall == null) {
 				Logger::Info("Skipping timed event $eventIndex");
-				
+
 				continue;
 			}
 
