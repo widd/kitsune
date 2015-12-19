@@ -2,6 +2,7 @@
 
 namespace Kitsune;
 use Kitsune\Events;
+use Kitsune\Logging\Logger;
 
 class BindException extends \Exception {}
 
@@ -70,11 +71,15 @@ abstract class Spirit {
 		foreach(Events::GetTimedEvents() as $eventIndex => $timedEvent) {
 			list($callable, $interval, $lastCall) = $timedEvent;
 
-			if((time() - $interval) >= $lastCall) {
-				call_user_func($callable, $this);
-
-				Events::ResetInterval($eventIndex);
+			if((time() - $interval) <= $lastCall && $lastCall == null) {
+				Logger::Info("Skipping timed event $eventIndex");
+				
+				continue;
 			}
+
+			call_user_func($callable, $this);
+
+			Events::ResetInterval($eventIndex);
 		}
 
 		$sockets = array_merge(array($this->masterSocket), $this->sockets);
