@@ -41,7 +41,7 @@ abstract class Spirit {
 		}
 	}
 
-	public function listen($address, $port, $backlog = 5, $throwException = false) {
+	public function listen($address, $port, $backlog = 25, $throwException = false) {
 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
 		socket_set_option($socket, SOL_SOCKET, SO_REUSEADDR, 1);
