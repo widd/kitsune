@@ -71,15 +71,15 @@ abstract class Spirit {
 		foreach(Events::GetTimedEvents() as $eventIndex => $timedEvent) {
 			list($callable, $interval, $lastCall) = $timedEvent;
 
-			if((time() - $interval) < $lastCall && $lastCall == null) {
-				Logger::Info("Skipping timed event $eventIndex");
+			if($lastCall === null) {
+				Events::ResetInterval($eventIndex);
+			} elseif(time() - $interval < $lastCall) {
+				Logger::Info("Not enough time has elapsed for event $eventIndex");
+			} else {
+				call_user_func($callable, $this);
 
-				continue;
+				Events::ResetInterval($eventIndex);
 			}
-
-			call_user_func($callable, $this);
-
-			Events::ResetInterval($eventIndex);
 		}
 
 		$sockets = array_merge(array($this->masterSocket), $this->sockets);
