@@ -96,7 +96,7 @@ final class Events {
 	// Clears the entire event array
 	public static function Flush($event) {
 		if(array_key_exists($event, self::$events)) {
-			self::$events = array();
+			self::$events[$event] = array();
 		}
 	}
 
