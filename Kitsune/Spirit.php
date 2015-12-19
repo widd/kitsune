@@ -1,6 +1,7 @@
 <?php
 
 namespace Kitsune;
+use Kitsune\Events;
 
 class BindException extends \Exception {}
 
@@ -46,60 +47,9 @@ abstract class Spirit {
 		socket_set_option($socket, SOL_SOCKET, SO_REUSEADDR, 1);
 		socket_set_nonblock($socket);
 
-		// Binding to a single port
-		if(!is_array($address) && !is_array($port)) {
-			$success = socket_bind($socket, $address, $port);
-		} else {
-			// Binding to multiple addresses/ports
-
-			if(is_array($address)) {
-				foreach($address as $_address) {
-					if(is_array($port)) {
-						/*
-						We also need to bind to multiple ports so lets
-						also get that out of the way.
-						*/
-
-						foreach($port as $_port) {
-							$success = socket_bind($socket, $_address, $_port);
-
-							/* 
-							We failed to bind to a port, so we're exiting
-							in order to throw an exception.
-							*/
-							if($success !== true) {
-								break 2;
-							}
-						}
-
-					} else {
-						$success = socket_bind($socket, $_address, $port);
-
-						if($success !== true) {
-							break;
-						}
-					}
-				}
-			} else {
-				/* 
-				We're not binding to multiple addresses, but we are
-				binding to multiple ports.
-				*/
-
-				foreach($port as $_port) {
-					$success = socket_bind($socket, $address, $_port);
-
-					if($success !== true) {
-						break;
-					}
-				}
-			}
-
-		}
+		$success = socket_bind($socket, $address, $port);
 
 		if($success === false) {
-			// I know this is ugly, but I didn't want to make the lines too long
-			
 			if($throwException !== false){
 				throw new BindException(
 					"Error binding to port $port: " .
