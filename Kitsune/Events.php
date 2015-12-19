@@ -29,6 +29,12 @@ final class Events {
 		}
 	}
 
+	public static function ResetInterval($eventIndex) {
+		if(array_key_exists(self::$timedEvents, $eventIndex)) {
+			self::$timedEvents[$eventIndex][2] = time();
+		}
+	}
+
 	public static function RemoveInterval($callbackIndex) {
 		if(array_key_exists(self::$timedEvents, $callbackIndex)) {
 			unset(self::$timedEvents[$callbackIndex]);
