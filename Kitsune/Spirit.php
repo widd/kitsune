@@ -78,7 +78,7 @@ abstract class Spirit {
 			if($lastCall === null) {
 				Events::ResetInterval($eventIndex);
 			} elseif(time() - $interval < $lastCall) {
-				Logger::Info("Not enough time has elapsed for event $eventIndex");
+				continue;
 			} else {
 				call_user_func($callable, $this);
 
