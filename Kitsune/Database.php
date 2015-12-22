@@ -21,6 +21,21 @@ class Database extends \PDO {
 		}
 	}
 
+	public function trackExists($trackId) {
+		try {
+			$existsStatement = $this->prepare("SELECT ID FROM `tracks` WHERE ID = :ID");
+			$existsStatement->bindValue(":ID", $trackId);
+			$existsStatement->execute();
+			
+			$rowCount = $existsStatement->rowCount();
+			$existsStatement->closeCursor();
+			
+			return $rowCount > 0;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
 	public function getTrackPattern($trackId) {
 		try {
 			$getTrackPattern = $this->prepare("SELECT Pattern FROM `tracks` WHERE ID = :ID");
