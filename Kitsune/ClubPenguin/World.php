@@ -127,7 +127,15 @@ final class World extends ClubPenguin {
 			
 			"a#gt" => "handleGetTablePopulation",
 			"a#jt" => "handleJoinTable",
-			"a#lt" => "handleLeaveTable"
+			"a#lt" => "handleLeaveTable",
+
+			"musictrack#broadcastingmusictracks" => "handleBroadcastingTracks",
+			"musictrack#getsharedmusictracks" => "handleGetSharedMusicTracks",
+			"musictrack#getmymusictracks" => "handleGetMyMusicTracks",
+			"musictrack#savemymusictrack" => "handleSaveMyMusicTrack",
+			"musictrack#refreshmytracklikes" => "handleRefreshMyTrackLikes",
+			"musictrack#loadmusictrack" => "handleLoadMusicTrack",
+			"musictrack#sharemymusictrack" => "handleShareMyMusicTrack"
 		),
 		
 		"z" => array(
@@ -159,6 +167,7 @@ final class World extends ClubPenguin {
 	use Handlers\Play\Blackhole;
 	use Handlers\Play\EPF;
 	use Handlers\Play\PlayerTransformation;
+	use Handlers\Play\Music;
 	
 	use Handlers\Game\General;
 	use Handlers\Game\Multiplayer;
