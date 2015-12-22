@@ -52,8 +52,13 @@ class Database extends \PDO {
 		}
 	}
 
-	public function updateTrackSharing($trackId, $sharingStatus) {
+	public function updateTrackSharing($playerId, $trackId, $sharingStatus) {
 		try {
+			$unshareMusicTracks = $this->prepare("UPDATE `tracks` SET Sharing = 0 WHERE Owner = :Owner");
+			$unshareMusicTracks->bindValue(":Owner", $playerId);
+			$unshareMusicTracks->execute();
+			$unshareMusicTracks->closeCursor();
+			
 			$shareMusicTrack = $this->prepare("UPDATE `tracks` SET Sharing = :Sharing WHERE ID = :Track");
 
 			$shareMusicTrack->bindValue(":Sharing", $sharingStatus);
