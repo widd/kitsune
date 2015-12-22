@@ -9,7 +9,7 @@ use Kitsune\ClubPenguin\Packets\Packet;
 // TODO: Use $penguin->room->send
 trait Music {
 
-	public $currentlyPlaying = -1;
+	public $lastPlayed = null; // Track string
 	public $broadcastingTracks = array();
 	public $broadcastingEventIndex = null;
 
@@ -28,11 +28,13 @@ trait Music {
 		$trackId = Packet::$Data[2];
 		$doShare = Packet::$Data[3];
 
-		$penguin->database->updateTrackSharing($trackId, $doShare);
-		$penguin->send("%xt%sharemymusictrack%-1%$doShare%");
+		if($penguin->database->trackExists($trackId) && in_array($doShare, range(0, 1))) {
+			$penguin->database->updateTrackSharing($trackId, $doShare);
+			$penguin->send("%xt%sharemymusictrack%-1%1%");
 
-		if($this->currentlyPlaying == -1) {
 			$this->broadcastNextTrack();
+		} else {
+			Logger::Warn("Player sent invalid track id and/or sharing value. Track id $trackId, Sharing $doShare");
 		}
 	}
 
@@ -46,17 +48,19 @@ trait Music {
 		$playerId = Packet::$Data[2];
 		$trackId = Packet::$Data[3];
 
-		if(array_key_exists($trackId, $this->cachedMusicTracks)) {
-			$musicTrack = $this->cachedMusicTracks[$trackId];
-		} else {
-			// ID, Name, Sharing, Pattern, Hash, Likes
-			$musicTrack = $penguin->database->getMusicTrack($trackId);
-			$this->cachedMusicTracks[$trackId] = $musicTrack;
-		}
-		
-		$trackData = implode("%", $musicTrack);
-		
-		$penguin->send("%xt%loadmusictrack%-1%$trackData%");
+		if($penguin->database->playerIdExists($playerId) && $penguin->database->trackExists($trackId)) {
+			if(array_key_exists($trackId, $this->cachedMusicTracks)) {
+				$musicTrack = $this->cachedMusicTracks[$trackId];
+			} else {
+				// ID, Name, Sharing, Pattern, Hash, Likes
+				$musicTrack = $penguin->database->getMusicTrack($trackId);
+				$this->cachedMusicTracks[$trackId] = $musicTrack;
+			}
+			
+			$trackData = implode("%", $musicTrack);
+			
+			$penguin->send("%xt%loadmusictrack%-1%$trackData%");
+		}		
 	}
 
 	/* Sends each of the player's tracks (include their player id and track id)
@@ -157,11 +161,13 @@ trait Music {
 		if($sharedTracksCount < 1) {
 			$penguin->send("%xt%broadcastingmusictracks%-1%0%-1%%");
 		} else {
-			if($this->currentlyPlaying == -1) {
-				$this->currentlyPlaying = 0; // So that the next track that's played is 1
+			if($this->broadcastingEventIndex == null) {
+				$this->broadcastNextTrack();
+			} else {
+				$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
+				$playlistPosition = $this->getPlaylistPosition($penguin);
 
-				$eventIndex = Events::AppendInterval(1, array($this, "broadcastNextTrack"));
-				$this->broadcastingEventIndex = $eventIndex;
+				$penguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%$playlistPosition%$sharedPlayerTracks%");
 			}
 		}
 	}
@@ -244,6 +250,18 @@ trait Music {
 		$this->broadcastingTracks = $sharedTracks;
 	}
 
+	private function getPlaylistPosition($penguin) {
+		foreach($this->broadcastingTracks as $broadcastingIndex => $broadcastingTrack) {
+			list($playerId) = explode("|", $broadcastingTrack);
+
+			if($penguin->id == $playerId) {
+				return $broadcastingIndex + 1;
+			}
+		}
+
+		return -1;
+	}
+
 	// Also checks whether anyone is still in the room, if not, destroy the event.
 	public function broadcastNextTrack() {
 		// Check to see whether players are still in the room and broadcasting/sharing
@@ -263,30 +281,29 @@ trait Music {
 		$sharedTracksCount = count($this->broadcastingTracks);
 
 		if($sharedTracksCount > 0) {
+			list($trackData) = $this->broadcastingTracks;
+
+			if($trackData == $this->lastPlayed) {
+				$lastPlayed = array_shift($this->broadcastingTracks);
+				array_push($this->broadcastingTracks, $lastPlayed);
+			}
+
 			$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
 
-			$this->currentlyPlaying++;
+			Logger::Debug("There are $sharedTracksCount tracks being shared");
 
-			Logger::Debug("Currently playing: {$this->currentlyPlaying}");
-
-			// Loop broadcasting tracks
-			if($this->currentlyPlaying > ++$sharedTracksCount) {
-				Logger::Debug("Currently playing is greater than shared track count ($sharedTracksCount)");
-
-				$this->currentlyPlaying = 1;
-			}
+			$this->stopBroadcasting();
 
 			foreach($dancingPenguins as $dancingPenguin) {
-				$dancingPenguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%{$this->currentlyPlaying}%$sharedPlayerTracks%");
+				$playlistPosition = $this->getPlaylistPosition($dancingPenguin);
+
+				$dancingPenguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%$playlistPosition%$sharedPlayerTracks%");
 			}
 
-			if($this->broadcastingEventIndex !== null) {
-				Logger::Debug("Event index not null, removin'");
-				Events::RemoveInterval($this->broadcastingEventIndex);
-			}
-
-			$trackData = $this->broadcastingTracks[--$this->currentlyPlaying];
+			list($trackData) = $this->broadcastingTracks;
 			var_dump($trackData);
+			var_dump($this->broadcastingTracks);
+
 			$trackId = explode("|", $trackData)[3];
 
 			echo "THE TRACK ID ", $trackId, "\n";
@@ -300,7 +317,7 @@ trait Music {
 				$this->cachedTrackPatterns[$trackId] = $trackPattern;
 			}
 			
-			$songLength = $this->determineSongLength($trackPattern) / 1000;
+			$songLength = ceil($this->determineSongLength($trackPattern) / 1000);
 
 			Logger::Debug("Song length: $songLength seconds");
 
@@ -308,6 +325,7 @@ trait Music {
 			$this->broadcastingEventIndex = $eventIndex;
 
 			Logger::Info("Assigned new event index $eventIndex");
+			$this->lastPlayed = $trackData;
 		} else {
 			Logger::Debug("No shared tracks!");
 			$this->stopBroadcasting();
@@ -319,10 +337,9 @@ trait Music {
 	public function stopBroadcasting() {
 		Logger::Debug("Stopping the broadcast");
 		
-		$this->currentlyPlaying = -1;
-		
 		if($this->broadcastingEventIndex !== null) {
 			Events::RemoveInterval($this->broadcastingEventIndex);
+			$this->broadcastingEventIndex = null;
 		}
 	}
 
