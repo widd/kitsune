@@ -20,6 +20,104 @@ class Database extends \PDO {
 			Logger::Fatal($pdoException->getMessage());
 		}
 	}
+
+	public function getTrackPattern($trackId) {
+		try {
+			$getTrackPattern = $this->prepare("SELECT Pattern FROM `tracks` WHERE ID = :ID");
+
+			$getTrackPattern->bindValue(":ID", $trackId);
+			$getTrackPattern->execute();
+
+			$trackPattern = $getTrackPattern->fetch(\PDO::FETCH_NUM);
+			$getTrackPattern->closeCursor();
+
+			return $trackPattern;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function updateTrackSharing($trackId, $sharingStatus) {
+		try {
+			$shareMusicTrack = $this->prepare("UPDATE `tracks` SET Sharing = :Sharing WHERE ID = :Track");
+
+			$shareMusicTrack->bindValue(":Sharing", $sharingStatus);
+			$shareMusicTrack->bindValue(":Track", $trackId);
+
+			$shareMusicTrack->execute();
+			$shareMusicTrack->closeCursor();
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function getMusicTrack($trackId) {
+		try {
+			$getMusicTrack = $this->prepare("SELECT ID, Name, Sharing, Pattern, Hash, Likes FROM `tracks` WHERE ID = :ID");
+
+			$getMusicTrack->bindValue(":ID", $trackId);
+			$getMusicTrack->execute();
+
+			$musicTrack = $getMusicTrack->fetch(\PDO::FETCH_NUM);
+			$getMusicTrack->closeCursor();
+
+			return $musicTrack;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function savePlayerTrack($trackOwner, $trackName, $trackPattern, $trackHash) {
+		try {
+			$savePlayerTrack = $this->prepare("INSERT INTO `tracks` (`Name`, `Owner`, `Hash`, `Pattern`) VALUES (:Name, :Owner, :Hash, :Pattern)");
+
+			$savePlayerTrack->bindValue(":Name", $trackName);
+			$savePlayerTrack->bindValue(":Owner", $trackOwner);
+			$savePlayerTrack->bindValue(":Hash", $trackHash);
+			$savePlayerTrack->bindValue(":Pattern", $trackPattern);
+
+			$savePlayerTrack->execute();
+			$savePlayerTrack->closeCursor();
+
+			$trackId = $this->lastInsertId();
+
+			return $trackId;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function getMyMusicTracks($penguinId) {
+		try {
+			$getMyMusicTracks = $this->prepare("SELECT ID, Name, Sharing, Likes FROM `tracks` WHERE Owner = :Owner");
+
+			$getMyMusicTracks->bindValue(":Owner", $penguinId);
+			$getMyMusicTracks->execute();
+
+			$myMusicTracks = $getMyMusicTracks->fetchAll(\PDO::FETCH_NUM);
+			$getMyMusicTracks->closeCursor();
+
+			return $myMusicTracks;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function getSharedTracks($penguinId) {
+		try {
+			$sharedTracks = $this->prepare("SELECT * FROM `tracks` WHERE Owner = :Owner AND Sharing = 1");
+
+			$sharedTracks->bindValue(":Owner", $penguinId);
+			$sharedTracks->execute();
+
+			$sharedPlayerTracks = $sharedTracks->fetchAll(\PDO::FETCH_ASSOC);
+			$sharedTracks->closeCursor();
+
+			return $sharedPlayerTracks;
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
 	
 	public function getNumberOfBans($penguinId) {
 		try {
