@@ -116,13 +116,6 @@ trait Navigation {
 		$y = Packet::$Data[4];
 		
 		$this->joinRoom($penguin, $room, $x, $y);
-
-		if($this->currentlyPlaying > -1) {
-			$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
-			$sharedTracksCount = count($this->broadcastingTracks);
-			
-			$penguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%{$this->currentlyPlaying}%$sharedPlayerTracks%");
-		}
 	}
 	
 	protected function handleJoinPlayerRoom($socket) {
