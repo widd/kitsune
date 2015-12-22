@@ -47,9 +47,10 @@ final class Events {
 
 	// Interval in seconds
 	public static function AppendInterval($interval, $callable) {
-		array_push(self::$timedEvents, [$callable, $interval, null]);
+		$eventArray = [$callable, $interval, null];
+		array_push(self::$timedEvents, $eventArray);
 
-		$eventIndex = array_search($callable, self::$timedEvents);
+		$eventIndex = array_search($eventArray, self::$timedEvents);
 		return $eventIndex;
 	}
 
