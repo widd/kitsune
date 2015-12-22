@@ -16,6 +16,26 @@ trait Music {
 	public $cachedMusicTracks = array();
 	public $cachedTrackPatterns = array();
 
+	public function sendBroadcastingTracks($penguin) {
+		$sharedTracksCount = count($this->broadcastingTracks);
+		$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
+		$playlistPosition = $this->getPlaylistPosition($penguin);
+
+		$penguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%$playlistPosition%$sharedPlayerTracks%");
+	}
+
+	// Sends the new list to everyone in the room
+	public function refreshRoomBroadcasting() {
+		$dancingPenguins = $this->rooms["120"]->penguins;
+		$this->refreshTrackBroadcasting();
+
+		$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
+
+		foreach($dancingPenguins as $dancingPenguin) {
+			$this->sendBroadcastingTracks($dancingPenguin);
+		}
+	}
+
 	/* 
 	TODO: Check whether the track exists and actually belongs to the player and
 	TODO: Check whether the values are even right
@@ -29,10 +49,10 @@ trait Music {
 		$doShare = Packet::$Data[3];
 
 		if($penguin->database->trackExists($trackId) && in_array($doShare, range(0, 1))) {
-			$penguin->database->updateTrackSharing($trackId, $doShare);
+			$penguin->database->updateTrackSharing($penguin->id, $trackId, $doShare);
 			$penguin->send("%xt%sharemymusictrack%-1%1%");
 
-			$this->broadcastNextTrack();
+			$this->refreshRoomBroadcasting();
 		} else {
 			Logger::Warn("Player sent invalid track id and/or sharing value. Track id $trackId, Sharing $doShare");
 		}
@@ -164,10 +184,7 @@ trait Music {
 			if($this->broadcastingEventIndex == null) {
 				$this->broadcastNextTrack();
 			} else {
-				$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
-				$playlistPosition = $this->getPlaylistPosition($penguin);
-
-				$penguin->send("%xt%broadcastingmusictracks%-1%$sharedTracksCount%$playlistPosition%$sharedPlayerTracks%");
+				$this->sendBroadcastingTracks($penguin);
 			}
 		}
 	}
