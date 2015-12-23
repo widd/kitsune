@@ -135,7 +135,9 @@ final class World extends ClubPenguin {
 			"musictrack#savemymusictrack" => "handleSaveMyMusicTrack",
 			"musictrack#refreshmytracklikes" => "handleRefreshMyTrackLikes",
 			"musictrack#loadmusictrack" => "handleLoadMusicTrack",
-			"musictrack#sharemymusictrack" => "handleShareMyMusicTrack"
+			"musictrack#sharemymusictrack" => "handleShareMyMusicTrack",
+			"musictrack#deletetrack" => "handleDeleteMusicTrack",
+			"musictrack#canliketrack" => "handleCanLikeMusicTrack"
 		),
 		
 		"z" => array(
