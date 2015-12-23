@@ -16,6 +16,71 @@ trait Music {
 	public $cachedMusicTracks = array();
 	public $cachedTrackPatterns = array();
 
+	/*
+	%xt%s%musictrack#liketrack%6%244799927%11604294%
+	%xt%liketrack%6%244799927%11604294%2%
+	*/
+
+	// %xt%s%musictrack#canliketrack%4%101%8%
+	// %xt%canliketrack%-1%11604294%1%
+	protected function handleCanLikeMusicTrack($socket) {
+		$penguin = $this->penguins[$socket];
+
+		$ownerId = Packet::$Data[2];
+		$trackId = Packet::$Data[3];
+
+		if($penguin->database->ownsTrack($ownerId, $trackId)) {
+			$trackLikes = $penguin->database->getTrackLikes($trackId);
+			// Check if empty
+
+			Logger::Debug("Track likes ". var_dump($trackLikes));
+
+			if(array_key_exists($penguin->username, $trackLikes)) {
+				$lastLike = $trackLikes[$penguin->username][0];
+
+				if(strtotime("-24 hours") >= $lastLike) {
+					Logger::Debug("{$penguin->username} is able to like $trackId");
+
+					return $penguin->send("%xt%canliketrack%-1%$trackId%1%");
+				} else {
+					Logger::Debug("{$penguin->username} is unable to like $trackId");
+					$penguin->send("%xt%canliketrack%-1%$trackId%0%");
+				}
+			} else {
+				Logger::Debug("{$penguin->username} is able to like $trackId (doesn't exist)");
+				
+				$penguin->send("%xt%canliketrack%-1%$trackId%1%");
+			}
+		}
+	}
+
+	// Only checks the first track to avoid refresh/replaying (TODO: Test)
+	public function isTrackBeingBroadcasted($trackId) {
+		list($currentlyBroadcasting) = $this->broadcastingTracks;
+
+		$trackParts = explode("|", $currentlyBroadcasting);
+		$broadcastingTrackId = $trackParts[3];
+
+		return $broadcastingTrackId == $trackId;
+	}
+
+	// Check if the track belongs to them
+	protected function handleDeleteMusicTrack($socket) {
+		$penguin = $this->penguins[$socket];
+
+		$trackId = Packet::$Data[2];
+
+		if($penguin->database->trackExists($trackId)) {
+			$penguin->database->deleteTrack($trackId);
+
+			$penguin->send("%xt%deletetrack%-1%1%");
+
+			if($this->isTrackBeingBroadcasted($trackId)) {
+				$this->broadcastNextTrack();
+			}
+		}
+	}
+
 	public function sendBroadcastingTracks($penguin) {
 		$sharedTracksCount = count($this->broadcastingTracks);
 		$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
