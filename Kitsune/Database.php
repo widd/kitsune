@@ -21,6 +21,71 @@ class Database extends \PDO {
 		}
 	}
 
+	public function updateTrackLikes($trackId, $likesArray) {
+		try {
+			$updateTrackLikes = $this->prepare("UPDATE `tracks` SET LikeStatistics = :Likes WHERE ID = :ID");
+
+			$updateTrackLikes->bindValue(":Likes", json_encode($likesArray));
+			$updateTrackLikes->bindValue(":ID", $trackId);
+			$updateTrackLikes->execute();
+
+			$updateTrackLikes->closeCursor();
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	// Maybe use fetch column?
+	public function getTrackLikes($trackId) {
+		try {
+			$getTrackLikes = $this->prepare("SELECT LikeStatistics FROM `tracks` WHERE ID = :ID");
+			$getTrackLikes->bindValue(":ID", $trackId);
+			$getTrackLikes->execute();
+
+			$likesRow = $getTrackLikes->fetch(\PDO::FETCH_NUM);
+			$getTrackLikes->closeCursor();
+
+			$encodedLikes = $likesRow[0];
+
+			return json_decode($encodedLikes, true);
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function ownsTrack($playerId, $trackId) {
+		try {
+			$ownsTrack = $this->prepare("SELECT Owner FROM `tracks` WHERE ID = :ID");
+			$ownsTrack->bindValue(":ID", $trackId);
+
+			$ownsTrack->execute();
+			$ownerId = $ownsTrack->fetch(\PDO::FETCH_NUM);
+
+			$ownsTrack->closeCursor();
+
+			if(is_array($ownerId)) {
+				$ownerId = $ownerId[0];
+
+				return $ownerId == $playerId;
+			} else {
+				return false;
+			}
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function deleteTrack($trackId) {
+		try {
+			$deleteTrack = $this->prepare("DELETE FROM `tracks` WHERE ID = :ID");
+			$deleteTrack->bindValue(":ID", $trackId);
+			$deleteTrack->execute();
+			$deleteTrack->closeCursor();
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
 	public function trackExists($trackId) {
 		try {
 			$existsStatement = $this->prepare("SELECT ID FROM `tracks` WHERE ID = :ID");
@@ -89,7 +154,7 @@ class Database extends \PDO {
 
 	public function savePlayerTrack($trackOwner, $trackName, $trackPattern, $trackHash) {
 		try {
-			$savePlayerTrack = $this->prepare("INSERT INTO `tracks` (`Name`, `Owner`, `Hash`, `Pattern`) VALUES (:Name, :Owner, :Hash, :Pattern)");
+			$savePlayerTrack = $this->prepare("INSERT INTO `tracks` (`Name`, `Owner`, `Hash`, `Pattern`, `LikeStatistics`) VALUES (:Name, :Owner, :Hash, :Pattern, '[]')");
 
 			$savePlayerTrack->bindValue(":Name", $trackName);
 			$savePlayerTrack->bindValue(":Owner", $trackOwner);
