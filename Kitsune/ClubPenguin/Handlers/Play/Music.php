@@ -55,9 +55,8 @@ trait Music {
 
 		if($penguin->database->ownsTrack($ownerId, $trackId)) {
 			$trackLikes = $penguin->database->getTrackLikes($trackId);
-			// Check if empty
 
-			if(array_key_exists($penguin->username, $trackLikes)) {
+			if(array_key_exists($penguin->username, $trackLikes) || empty($trackLikes)) {
 				$lastLike = $trackLikes[$penguin->username][0];
 
 				if(strtotime("-24 hours") >= $lastLike) {
