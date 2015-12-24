@@ -85,7 +85,7 @@ trait Music {
 
 		$trackId = Packet::$Data[2];
 
-		if($penguin->database->trackExists($trackId)) {
+		if($penguin->database->ownsTrack($penguin->id, $trackId)) {
 			$penguin->database->deleteTrack($trackId);
 
 			$penguin->send("%xt%deletetrack%-1%1%");
@@ -93,6 +93,8 @@ trait Music {
 			if($this->isTrackBeingBroadcasted($trackId)) {
 				$this->broadcastNextTrack();
 			}
+		} else {
+			Logger::Warn("{$penguin->name} tried to delete a track they don't own!");
 		}
 	}
 
