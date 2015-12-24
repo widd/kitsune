@@ -22,7 +22,9 @@ final class Commands extends Plugin {
 	
 	private $commands = array(
 		"AI" => "buyItem",
-		"JR" => "joinRoom"
+		"JR" => "joinRoom",
+		"AC" => "addCoins",
+		"KICK" => "kickPlayer"
 	);
 	
 	private $mutedPenguins = array();
@@ -51,6 +53,32 @@ final class Commands extends Plugin {
 		list($roomId) = $arguments;
 		
 		$this->server->joinRoom($penguin, $roomId);
+	}
+	
+	private function addCoins($penguin, $arguments) {
+		list($coinAmt) = $arguments;
+		
+		if(is_numeric($coinAmt)) {
+			if($coinAmt >= 0 && $coinAmt <= 10000) {
+				$penguin->addCoins($coinAmt);
+			}
+		}
+	}
+	
+	private function kickPlayer($penguin, $arguments) {
+		if($penguin->moderator) {
+			$targetUsername = implode(" ", $arguments);
+			$targetPlayer = $this->server->getPlayerByName($targetUsername);
+			
+			if($targetPlayer !== null) {
+				if($targetPlayer->moderator) {
+					return;
+				}
+				
+				$targetPlayer->send("%xt%moderatormessage%-1%3%");
+				$this->server->removePenguin($targetPlayer);
+			}
+		}
 	}
 	
 	protected function handlePlayerMessage($penguin) {
