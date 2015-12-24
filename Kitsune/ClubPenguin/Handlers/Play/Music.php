@@ -16,10 +16,6 @@ trait Music {
 	public $cachedMusicTracks = array();
 	public $cachedTrackPatterns = array();
 
-	/*
-	%xt%s%musictrack#liketrack%6%244799927%11604294%
-	%xt%liketrack%6%244799927%11604294%2%
-	*/
 	protected function handleLikeMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -51,8 +47,6 @@ trait Music {
 		}
 	}
 
-	// %xt%s%musictrack#canliketrack%4%101%8%
-	// %xt%canliketrack%-1%11604294%1%
 	protected function handleCanLikeMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -69,22 +63,16 @@ trait Music {
 				$lastLike = $trackLikes[$penguin->username][0];
 
 				if(strtotime("-24 hours") >= $lastLike) {
-					Logger::Debug("{$penguin->username} is able to like $trackId");
-
 					return $penguin->send("%xt%canliketrack%-1%$trackId%1%");
 				} else {
-					Logger::Debug("{$penguin->username} is unable to like $trackId");
 					$penguin->send("%xt%canliketrack%-1%$trackId%0%");
 				}
-			} else {
-				Logger::Debug("{$penguin->username} is able to like $trackId (doesn't exist)");
-				
+			} else {				
 				$penguin->send("%xt%canliketrack%-1%$trackId%1%");
 			}
 		}
 	}
 
-	// Only checks the first track to avoid refresh/replaying (TODO: Test)
 	public function isTrackBeingBroadcasted($trackId) {
 		list($currentlyBroadcasting) = $this->broadcastingTracks;
 
@@ -131,12 +119,6 @@ trait Music {
 		}
 	}
 
-	/* 
-	TODO: Check whether the track exists and actually belongs to the player and
-	TODO: Check whether the values are even right
-	%xt%s%musictrack#sharemymusictrack%76%11596298%1%
-	%xt%sharemymusictrack%-1%1%
-	*/
 	protected function handleShareMyMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -153,10 +135,6 @@ trait Music {
 		}
 	}
 
-	/* TODO: Check if player id and track even exist
-	%xt%s%musictrack#loadmusictrack%6%313662467%11596298%
-	%xt%loadmusictrack%-1%11596298%Hello world%1%pattern%51b4b593efdbce53ed3feeff74e12f9a%0%
-	*/
 	protected function handleLoadMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -178,13 +156,6 @@ trait Music {
 		}		
 	}
 
-	/* Sends each of the player's tracks (include their player id and track id)
-	%xt%s%musictrack#refreshmytracklikes%76%
-	%xt%getlikecountfortrack%-1%313662467%11596298%0%
-	1/0 = on/off ?
-	%xt%s%musictrack#sharemymusictrack%76%11596298%1%
-	%xt%sharemymusictrack%-1%1%
-	*/
 	protected function handleRefreshMyTrackLikes($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -200,15 +171,11 @@ trait Music {
 		}
 	}
 
-	// savePlayerTrack
-	// %xt%s%musictrack#savemymusictrack%76%Hello world%Pattern%51b4b593efdbce53ed3feeff74e12f9a%
-	// %xt%savemymusictrack%-1%11596298%
+	// Maybe check for corrupted insertions?
 	protected function handleSaveMyMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
 		list($trackName, $trackPattern, $trackHash) = array_slice(Packet::$Data, 2);
-
-		Logger::Info("Attempting to insert $trackName..");
 
 		$encodedPattern = $this->encodeMusicTrack($trackPattern);
 
@@ -223,14 +190,6 @@ trait Music {
 		}
 	}
 
-	/*
-	%xt%s%musictrack#getmymusictracks%76%
-	1 = number of tracks
-	0 = sharing
-	-1 = likes
-	%xt%getmymusictracks%-1%1%11596298|Hello world|0|-1%
-	%xt%getmymusictracks%-1%0%% = None
-	*/
 	protected function handleGetMyMusicTracks($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -255,17 +214,6 @@ trait Music {
 		}
 	}
 
-	/*
-	Check if anyone in the room is currently sharing a track, then broadcast it
-	Query this (owner = player id and sharing = 1)
-	Returns a list of all the tracks that can be broadcasted in the room (array with string elements)
-	Broadcasting string separated by commas
-
-	Broadcasting packet contains number of shared tracks (array length), and the track to broadcast (according to its index in the array)
-	*/
-	// No one = %xt%broadcastingmusictracks%-1%0%-1%%
-	// %xt%broadcastingmusictracks%-1%2%1%313662467|P313662467|{b0c2c7c5-2083-40cb-933b-914f79697507}|11596298|0,244799927|Heavy Sky|{bc4fbd24-cf68-46b6-aff5-6effdb2221ec}|11594120|2,%
-	// 
 	protected function handleBroadcastingTracks($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -286,9 +234,11 @@ trait Music {
 
 	/*
 	Get the ids of everyone on the server, and retrieve all of the tracks
-	that they're sharing. */
+	that they're sharing.
 
-	// %xt%getsharedmusictracks%-1%numberOfSharedTracks%playerId|Username|trackId|trackLikes,etc%
+	Idea - Possibly have an array keep track of everyone who's sharing their
+	music for effiency's sake.
+	*/
 	protected function handleGetSharedMusicTracks($socket) {
 		$penguin = $this->penguins[$socket];
 
@@ -337,11 +287,6 @@ trait Music {
 		return substr($songHash, -16) . substr($songHash, 0, 16);
 	}
 
-	/* Solely for updating the arrays, destroying the event-loop, and updating the currently-playing property.
-	Check whether anyone in the room is still sharing their music, if not, destroy the event.
-	Check whether anyone in the room has stopped sharing their music, if so, stop broadcasting their music.
-	Check whether anyone in the room has started sharing their music, if so, broadcast their music.
-	*/
 	private function refreshTrackBroadcasting() {
 		$dancingPenguins = $this->rooms["120"]->penguins;
 		$sharedTracks = array();
@@ -374,15 +319,10 @@ trait Music {
 		return -1;
 	}
 
-	// Also checks whether anyone is still in the room, if not, destroy the event.
 	public function broadcastNextTrack() {
-		// Check to see whether players are still in the room and broadcasting/sharing
-		// Increment track and broadcast ifso, etc
 		$dancingPenguins = $this->rooms["120"]->penguins;
 
-		if(empty($dancingPenguins)) { // Everyone's gone~!
-			Logger::Debug("Everyone's gone!");
-
+		if(empty($dancingPenguins)) { 
 			$this->stopBroadcasting();
 
 			return false;
@@ -402,8 +342,6 @@ trait Music {
 
 			$sharedPlayerTracks = implode(",", $this->broadcastingTracks);
 
-			Logger::Debug("There are $sharedTracksCount tracks being shared");
-
 			$this->stopBroadcasting();
 
 			foreach($dancingPenguins as $dancingPenguin) {
@@ -413,42 +351,31 @@ trait Music {
 			}
 
 			list($trackData) = $this->broadcastingTracks;
-			var_dump($trackData);
-			var_dump($this->broadcastingTracks);
 
 			$trackId = explode("|", $trackData)[3];
-
-			echo "THE TRACK ID ", $trackId, "\n";
 
 			if(array_key_exists($trackId, $this->cachedTrackPatterns)) {
 				$trackPattern = $this->cachedTrackPatterns[$trackId];
 			} else {
 				list($trackPattern) = end($this->penguins)->database->getTrackPattern($trackId);
-				echo "Oi, track pattern ", var_dump($trackPattern), "\n";
 
 				$this->cachedTrackPatterns[$trackId] = $trackPattern;
 			}
 			
 			$songLength = ceil($this->determineSongLength($trackPattern) / 1000);
 
-			Logger::Debug("Song length: $songLength seconds");
-
 			$eventIndex = Events::AppendInterval($songLength, array($this, "broadcastNextTrack"));
 			$this->broadcastingEventIndex = $eventIndex;
 
-			Logger::Info("Assigned new event index $eventIndex");
 			$this->lastPlayed = $trackData;
 		} else {
-			Logger::Debug("No shared tracks!");
 			$this->stopBroadcasting();
 
 			return false;
 		}	
 	}
 
-	public function stopBroadcasting() {
-		Logger::Debug("Stopping the broadcast");
-		
+	public function stopBroadcasting() {		
 		if($this->broadcastingEventIndex !== null) {
 			Events::RemoveInterval($this->broadcastingEventIndex);
 			$this->broadcastingEventIndex = null;
