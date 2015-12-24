@@ -20,6 +20,36 @@ trait Music {
 	%xt%s%musictrack#liketrack%6%244799927%11604294%
 	%xt%liketrack%6%244799927%11604294%2%
 	*/
+	protected function handleLikeMusicTrack($socket) {
+		$penguin = $this->penguins[$socket];
+
+		$ownerId = Packet::$Data[2];
+		$trackId = Packet::$Data[3];
+
+		if($penguin->database->ownsTrack($ownerId, $trackId)) {
+			$trackLikes = $penguin->database->getTrackLikes($trackId);
+
+			if(array_key_exists($penguin->username, $trackLikes)) {
+				$lastLike = $trackLikes[$penguin->username];
+
+				if(strtotime("-24 hours") >= $lastLike) {
+					$trackLikes[$penguin->username] = time();
+				} else {
+					Logger::Warn("{$penguin->username} ({$penguin->id}) tried to like a track that they couldn't!");
+					return false;
+				}
+			} else {
+				$trackLikes[$penguin->username] = time();
+			}
+
+			$penguin->database->updateTrackLikes($trackId, $trackLikes);
+			$penguin->database->incrementTrackLikes($trackId);
+
+			$likeCount = $penguin->database->getTrackLikeCount($trackId);
+
+			$penguin->send("%xt%liketrack%6%$ownerId%$trackId%$likeCount%");
+		}
+	}
 
 	// %xt%s%musictrack#canliketrack%4%101%8%
 	// %xt%canliketrack%-1%11604294%1%
