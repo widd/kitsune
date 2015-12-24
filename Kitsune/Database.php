@@ -21,6 +21,35 @@ class Database extends \PDO {
 		}
 	}
 
+	public function getTrackLikeCount($trackId) {
+		try {
+			$getTrackLikeCount = $this->prepare("SELECT Likes FROM `tracks` WHERE ID = :ID");
+
+			$getTrackLikeCount->bindValue(":ID", $trackId);
+			$getTrackLikeCount->execute();
+
+			$likeCount = $getTrackLikeCount->fetch(\PDO::FETCH_NUM);
+			$getTrackLikeCount->closeCursor();
+
+			return $likeCount[0];
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
+	public function incrementTrackLikes($trackId) {
+		try {
+			$incrementTrackLikes = $this->prepare("UPDATE `tracks` SET Likes = Likes + 1 WHERE ID = :ID");
+
+			$incrementTrackLikes->bindValue(":ID", $trackId);
+			$incrementTrackLikes->execute();
+
+			$incrementTrackLikes->closeCursor();
+		} catch(\PDOException $pdoException) {
+			Logger::Warn($pdoException->getMessage());
+		}
+	}
+
 	public function updateTrackLikes($trackId, $likesArray) {
 		try {
 			$updateTrackLikes = $this->prepare("UPDATE `tracks` SET LikeStatistics = :Likes WHERE ID = :ID");
