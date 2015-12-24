@@ -6,7 +6,6 @@ use Kitsune\Events;
 use Kitsune\Logging\Logger;
 use Kitsune\ClubPenguin\Packets\Packet;
 
-// TODO: Use $penguin->room->send
 trait Music {
 
 	public $lastPlayed = null; // Track string
@@ -79,7 +78,6 @@ trait Music {
 		return $broadcastingTrackId == $trackId;
 	}
 
-	// Check if the track belongs to them
 	protected function handleDeleteMusicTrack($socket) {
 		$penguin = $this->penguins[$socket];
 
