@@ -57,8 +57,6 @@ trait Music {
 			$trackLikes = $penguin->database->getTrackLikes($trackId);
 			// Check if empty
 
-			Logger::Debug("Track likes ". var_dump($trackLikes));
-
 			if(array_key_exists($penguin->username, $trackLikes)) {
 				$lastLike = $trackLikes[$penguin->username][0];
 
