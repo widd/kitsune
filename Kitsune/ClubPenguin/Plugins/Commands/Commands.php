@@ -18,9 +18,9 @@ final class Commands extends Plugin {
 	
 	public $xmlHandlers = array(null);
 	
-	private $commandPrefixes = array("!", "/", "~");
+	public $commandPrefixes = array("!", "/", "~");
 	
-	private $commands = array(
+	public $commands = array(
 		"AI" => "buyItem",
 		"JR" => "joinRoom",
 		"AC" => "addCoins",
