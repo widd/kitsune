@@ -7,6 +7,11 @@ A PHP implementation of Club Penguin's latest protocol.
   * You'll want to install or enable the cURL extension, which may involve installing the ```php5-curl``` package on GNU/Linux distributions.
 * MySQL server
   * MariaDB (which works) is also bundled with XAMPP.
+* [Composer](https://getcomposer.org/)
+  * We use Composer to manage Kitsune's dependencies, such as Propel.
 
 ## Configuration
 Edit **Database.xml** to conform to your database installation.
+
+## Installation
+Install all of the required dependencies by running the ``` composer install ``` command.
