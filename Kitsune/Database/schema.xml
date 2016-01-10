@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="bans" idMethod="native" phpName="Bans">
+    <column name="ID" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Moderator" phpName="Moderator" type="CHAR" size="12" required="true"/>
+    <column name="Player" phpName="Player" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+    <column name="Comment" phpName="Comment" type="LONGVARCHAR" required="true"/>
+    <column name="Expiration" phpName="Expiration" type="INTEGER" size="8" required="true"/>
+    <column name="Time" phpName="Time" type="INTEGER" size="8" required="true"/>
+    <column name="Type" phpName="Type" type="SMALLINT" size="3" sqlType="smallint(3) unsigned" required="true"/>
+    <unique name="Time">
+      <unique-column name="Time"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="igloos" idMethod="native" phpName="Igloos">
+    <column name="ID" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Owner" phpName="Owner" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="Type" phpName="Type" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="1"/>
+    <column name="Floor" phpName="Floor" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="0"/>
+    <column name="Music" phpName="Music" type="SMALLINT" required="true" defaultValue="0"/>
+    <column name="Furniture" phpName="Furniture" type="LONGVARCHAR" required="true"/>
+    <column name="Location" phpName="Location" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="1"/>
+    <column name="Likes" phpName="Likes" type="LONGVARCHAR" required="true"/>
+    <column name="Locked" phpName="Locked" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="penguins" idMethod="native" phpName="Penguins">
+    <column name="ID" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Username" phpName="Username" type="CHAR" size="12" required="true"/>
+    <column name="Nickname" phpName="Nickname" type="CHAR" size="16" required="true"/>
+    <column name="Password" phpName="Password" type="CHAR" size="32" required="true"/>
+    <column name="LoginKey" phpName="Loginkey" type="CHAR" size="32" required="true"/>
+    <column name="ConfirmationHash" phpName="Confirmationhash" type="CHAR" size="32" required="true"/>
+    <column name="SWID" phpName="Swid" type="CHAR" size="38" required="true"/>
+    <column name="Avatar" phpName="Avatar" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="0"/>
+    <column name="AvatarAttributes" phpName="Avatarattributes" type="CHAR" size="98" required="true" defaultValue="{&quot;spriteScale&quot;:100,&quot;spriteSpeed&quot;:100,&quot;ignoresBlockLayer&quot;:false,&quot;invisible&quot;:false,&quot;floating&quot;:false}"/>
+    <column name="Email" phpName="Email" type="CHAR" size="254" required="true"/>
+    <column name="RegistrationDate" phpName="Registrationdate" type="INTEGER" size="8" required="true"/>
+    <column name="Moderator" phpName="Moderator" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="Inventory" phpName="Inventory" type="LONGVARCHAR" required="true"/>
+    <column name="CareInventory" phpName="Careinventory" type="LONGVARCHAR" required="true"/>
+    <column name="Coins" phpName="Coins" type="SMALLINT" size="7" sqlType="mediumint(7) unsigned" required="true" defaultValue="200000"/>
+    <column name="Igloo" phpName="Igloo" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="Igloos" phpName="Igloos" type="LONGVARCHAR" required="true"/>
+    <column name="Floors" phpName="Floors" type="LONGVARCHAR" required="true"/>
+    <column name="Locations" phpName="Locations" type="LONGVARCHAR" required="true"/>
+    <column name="Furniture" phpName="Furniture" type="LONGVARCHAR" required="true"/>
+    <column name="Color" phpName="Color" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="1"/>
+    <column name="Head" phpName="Head" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Face" phpName="Face" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Neck" phpName="Neck" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Body" phpName="Body" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Hand" phpName="Hand" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Feet" phpName="Feet" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Photo" phpName="Photo" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Flag" phpName="Flag" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="Walking" phpName="Walking" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true" defaultValue="0"/>
+    <column name="Banned" phpName="Banned" type="VARCHAR" size="20" required="true" defaultValue="0"/>
+    <column name="Stamps" phpName="Stamps" type="LONGVARCHAR" required="true"/>
+    <column name="StampBook" phpName="Stampbook" type="VARCHAR" size="150" required="true" defaultValue="1%1%1%1"/>
+    <column name="EPF" phpName="Epf" type="VARCHAR" size="9" required="true" defaultValue="0,0,0"/>
+    <column name="PuffleQuest" phpName="Pufflequest" type="VARCHAR" size="25" required="true" defaultValue="0,1,|0;0;1403959119;"/>
+    <unique name="Username">
+      <unique-column name="Username"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="postcards" idMethod="native" phpName="Postcards">
+    <column name="ID" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Recipient" phpName="Recipient" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="SenderName" phpName="Sendername" type="CHAR" size="12" required="true"/>
+    <column name="SenderID" phpName="Senderid" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="Details" phpName="Details" type="VARCHAR" size="12" required="true"/>
+    <column name="Date" phpName="Date" type="INTEGER" size="8" required="true"/>
+    <column name="Type" phpName="Type" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true"/>
+    <column name="HasRead" phpName="Hasread" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="puffles" idMethod="native" phpName="Puffles">
+    <column name="ID" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Owner" phpName="Owner" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="Name" phpName="Name" type="CHAR" size="12" required="true"/>
+    <column name="AdoptionDate" phpName="Adoptiondate" type="INTEGER" size="8" required="true"/>
+    <column name="Type" phpName="Type" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true"/>
+    <column name="Subtype" phpName="Subtype" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true"/>
+    <column name="Hat" phpName="Hat" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true"/>
+    <column name="Food" phpName="Food" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="100"/>
+    <column name="Play" phpName="Play" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="100"/>
+    <column name="Rest" phpName="Rest" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="100"/>
+    <column name="Clean" phpName="Clean" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true" defaultValue="100"/>
+    <column name="Backyard" phpName="Backyard" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tracks" idMethod="native" phpName="Tracks">
+    <column name="ID" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="Name" phpName="Name" type="VARCHAR" size="12" required="true"/>
+    <column name="Owner" phpName="Owner" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="Hash" phpName="Hash" type="CHAR" size="32" required="true"/>
+    <column name="Sharing" phpName="Sharing" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="Pattern" phpName="Pattern" type="LONGVARCHAR" required="true"/>
+    <column name="Likes" phpName="Likes" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" required="true" defaultValue="0"/>
+    <column name="LikeStatistics" phpName="Likestatistics" type="LONGVARCHAR" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
