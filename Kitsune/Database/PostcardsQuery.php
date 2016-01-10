@@ -1,6 +1,8 @@
 <?php
 
-use Base\PostcardsQuery as BasePostcardsQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\PostcardsQuery as BasePostcardsQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'postcards' table.

@@ -1,11 +1,11 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \PufflesQuery as ChildPufflesQuery;
 use \Exception;
 use \PDO;
-use Map\PufflesTableMap;
+use Kitsune\Database\PufflesQuery as ChildPufflesQuery;
+use Kitsune\Database\Map\PufflesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,14 +23,14 @@ use Propel\Runtime\Parser\AbstractParser;
  *
  * 
  *
-* @package    propel.generator..Base
+* @package    propel.generator.Kitsune.Database.Base
 */
 abstract class Puffles implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\PufflesTableMap';
+    const TABLE_MAP = '\\Kitsune\\Database\\Map\\PufflesTableMap';
 
 
     /**
@@ -172,7 +172,7 @@ abstract class Puffles implements ActiveRecordInterface
     }
 
     /**
-     * Initializes internal state of Base\Puffles object.
+     * Initializes internal state of Kitsune\Database\Base\Puffles object.
      * @see applyDefaults()
      */
     public function __construct()
@@ -532,7 +532,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [id] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -552,7 +552,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [owner] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setOwner($v)
     {
@@ -572,7 +572,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [name] column.
      * 
      * @param string $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -592,7 +592,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [adoptiondate] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setAdoptiondate($v)
     {
@@ -612,7 +612,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [type] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setType($v)
     {
@@ -632,7 +632,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [subtype] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setSubtype($v)
     {
@@ -652,7 +652,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [hat] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setHat($v)
     {
@@ -672,7 +672,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [food] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setFood($v)
     {
@@ -692,7 +692,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [play] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setPlay($v)
     {
@@ -712,7 +712,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [rest] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setRest($v)
     {
@@ -732,7 +732,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Set the value of [clean] column.
      * 
      * @param int $v new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setClean($v)
     {
@@ -756,7 +756,7 @@ abstract class Puffles implements ActiveRecordInterface
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      * 
      * @param  boolean|integer|string $v The new value
-     * @return $this|\Puffles The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Puffles The current object (for fluent API support)
      */
     public function setBackyard($v)
     {
@@ -878,7 +878,7 @@ abstract class Puffles implements ActiveRecordInterface
             return $startcol + 12; // 12 = PufflesTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Puffles'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Kitsune\\Database\\Puffles'), 0, $e);
         }
     }
 
@@ -1313,7 +1313,7 @@ abstract class Puffles implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Puffles
+     * @return $this|\Kitsune\Database\Puffles
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
@@ -1328,7 +1328,7 @@ abstract class Puffles implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Puffles
+     * @return $this|\Kitsune\Database\Puffles
      */
     public function setByPosition($pos, $value)
     {
@@ -1450,7 +1450,7 @@ abstract class Puffles implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Puffles The current object, for fluid interface
+     * @return $this|\Kitsune\Database\Puffles The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1587,7 +1587,7 @@ abstract class Puffles implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Puffles (or compatible) type.
+     * @param      object $copyObj An object of \Kitsune\Database\Puffles (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1620,7 +1620,7 @@ abstract class Puffles implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Puffles Clone of current object.
+     * @return \Kitsune\Database\Puffles Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)

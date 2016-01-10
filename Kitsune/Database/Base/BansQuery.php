@@ -1,12 +1,12 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \Bans as ChildBans;
-use \BansQuery as ChildBansQuery;
 use \Exception;
 use \PDO;
-use Map\BansTableMap;
+use Kitsune\Database\Bans as ChildBans;
+use Kitsune\Database\BansQuery as ChildBansQuery;
+use Kitsune\Database\Map\BansTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -81,13 +81,13 @@ abstract class BansQuery extends ModelCriteria
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\BansQuery object.
+     * Initializes internal state of \Kitsune\Database\Base\BansQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Bans', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Kitsune\\Database\\Bans', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }

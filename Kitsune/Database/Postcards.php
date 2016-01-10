@@ -1,6 +1,8 @@
 <?php
 
-use Base\Postcards as BasePostcards;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Postcards as BasePostcards;
 
 /**
  * Skeleton subclass for representing a row from the 'postcards' table.

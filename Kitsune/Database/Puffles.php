@@ -1,6 +1,8 @@
 <?php
 
-use Base\Puffles as BasePuffles;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Puffles as BasePuffles;
 
 /**
  * Skeleton subclass for representing a row from the 'puffles' table.

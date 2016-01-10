@@ -1,6 +1,8 @@
 <?php
 
-use Base\PufflesQuery as BasePufflesQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\PufflesQuery as BasePufflesQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'puffles' table.

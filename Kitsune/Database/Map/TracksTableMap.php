@@ -1,9 +1,9 @@
 <?php
 
-namespace Map;
+namespace Kitsune\Database\Map;
 
-use \Tracks;
-use \TracksQuery;
+use Kitsune\Database\Tracks;
+use Kitsune\Database\TracksQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -34,7 +34,7 @@ class TracksTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.TracksTableMap';
+    const CLASS_NAME = 'Kitsune.Database.Map.TracksTableMap';
 
     /**
      * The default database name for this class
@@ -49,12 +49,12 @@ class TracksTableMap extends TableMap
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Tracks';
+    const OM_CLASS = '\\Kitsune\\Database\\Tracks';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Tracks';
+    const CLASS_DEFAULT = 'Kitsune.Database.Tracks';
 
     /**
      * The total number of columns
@@ -157,8 +157,8 @@ class TracksTableMap extends TableMap
         $this->setName('tracks');
         $this->setPhpName('Tracks');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Tracks');
-        $this->setPackage('');
+        $this->setClassName('\\Kitsune\\Database\\Tracks');
+        $this->setPackage('Kitsune.Database');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, 10, null);
@@ -382,7 +382,7 @@ class TracksTableMap extends TableMap
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Tracks) { // it's a model object
+        } elseif ($values instanceof \Kitsune\Database\Tracks) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks

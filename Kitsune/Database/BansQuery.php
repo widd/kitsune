@@ -1,6 +1,8 @@
 <?php
 
-use Base\BansQuery as BaseBansQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\BansQuery as BaseBansQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'bans' table.

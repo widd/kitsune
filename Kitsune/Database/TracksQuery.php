@@ -1,6 +1,8 @@
 <?php
 
-use Base\TracksQuery as BaseTracksQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\TracksQuery as BaseTracksQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'tracks' table.

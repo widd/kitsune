@@ -1,9 +1,9 @@
 <?php
 
-namespace Map;
+namespace Kitsune\Database\Map;
 
-use \Puffles;
-use \PufflesQuery;
+use Kitsune\Database\Puffles;
+use Kitsune\Database\PufflesQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -34,7 +34,7 @@ class PufflesTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.PufflesTableMap';
+    const CLASS_NAME = 'Kitsune.Database.Map.PufflesTableMap';
 
     /**
      * The default database name for this class
@@ -49,12 +49,12 @@ class PufflesTableMap extends TableMap
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Puffles';
+    const OM_CLASS = '\\Kitsune\\Database\\Puffles';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Puffles';
+    const CLASS_DEFAULT = 'Kitsune.Database.Puffles';
 
     /**
      * The total number of columns
@@ -177,8 +177,8 @@ class PufflesTableMap extends TableMap
         $this->setName('puffles');
         $this->setPhpName('Puffles');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Puffles');
-        $this->setPackage('');
+        $this->setClassName('\\Kitsune\\Database\\Puffles');
+        $this->setPackage('Kitsune.Database');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, 10, null);
@@ -414,7 +414,7 @@ class PufflesTableMap extends TableMap
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Puffles) { // it's a model object
+        } elseif ($values instanceof \Kitsune\Database\Puffles) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks

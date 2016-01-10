@@ -1,9 +1,9 @@
 <?php
 
-namespace Map;
+namespace Kitsune\Database\Map;
 
-use \Penguins;
-use \PenguinsQuery;
+use Kitsune\Database\Penguins;
+use Kitsune\Database\PenguinsQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -34,7 +34,7 @@ class PenguinsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.PenguinsTableMap';
+    const CLASS_NAME = 'Kitsune.Database.Map.PenguinsTableMap';
 
     /**
      * The default database name for this class
@@ -49,12 +49,12 @@ class PenguinsTableMap extends TableMap
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Penguins';
+    const OM_CLASS = '\\Kitsune\\Database\\Penguins';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Penguins';
+    const CLASS_DEFAULT = 'Kitsune.Database.Penguins';
 
     /**
      * The total number of columns
@@ -292,8 +292,8 @@ class PenguinsTableMap extends TableMap
         $this->setName('penguins');
         $this->setPhpName('Penguins');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Penguins');
-        $this->setPackage('');
+        $this->setClassName('\\Kitsune\\Database\\Penguins');
+        $this->setPackage('Kitsune.Database');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, 10, null);
@@ -598,7 +598,7 @@ class PenguinsTableMap extends TableMap
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Penguins) { // it's a model object
+        } elseif ($values instanceof \Kitsune\Database\Penguins) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks

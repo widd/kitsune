@@ -1,11 +1,11 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \TracksQuery as ChildTracksQuery;
 use \Exception;
 use \PDO;
-use Map\TracksTableMap;
+use Kitsune\Database\TracksQuery as ChildTracksQuery;
+use Kitsune\Database\Map\TracksTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,14 +23,14 @@ use Propel\Runtime\Parser\AbstractParser;
  *
  * 
  *
-* @package    propel.generator..Base
+* @package    propel.generator.Kitsune.Database.Base
 */
 abstract class Tracks implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\TracksTableMap';
+    const TABLE_MAP = '\\Kitsune\\Database\\Map\\TracksTableMap';
 
 
     /**
@@ -138,7 +138,7 @@ abstract class Tracks implements ActiveRecordInterface
     }
 
     /**
-     * Initializes internal state of Base\Tracks object.
+     * Initializes internal state of Kitsune\Database\Base\Tracks object.
      * @see applyDefaults()
      */
     public function __construct()
@@ -458,7 +458,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [id] column.
      * 
      * @param int $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -478,7 +478,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [name] column.
      * 
      * @param string $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -498,7 +498,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [owner] column.
      * 
      * @param int $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setOwner($v)
     {
@@ -518,7 +518,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [hash] column.
      * 
      * @param string $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setHash($v)
     {
@@ -542,7 +542,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      * 
      * @param  boolean|integer|string $v The new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setSharing($v)
     {
@@ -566,7 +566,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [pattern] column.
      * 
      * @param string $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setPattern($v)
     {
@@ -586,7 +586,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [likes] column.
      * 
      * @param int $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setLikes($v)
     {
@@ -606,7 +606,7 @@ abstract class Tracks implements ActiveRecordInterface
      * Set the value of [likestatistics] column.
      * 
      * @param string $v new value
-     * @return $this|\Tracks The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Tracks The current object (for fluent API support)
      */
     public function setLikestatistics($v)
     {
@@ -700,7 +700,7 @@ abstract class Tracks implements ActiveRecordInterface
             return $startcol + 8; // 8 = TracksTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Tracks'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Kitsune\\Database\\Tracks'), 0, $e);
         }
     }
 
@@ -1095,7 +1095,7 @@ abstract class Tracks implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Tracks
+     * @return $this|\Kitsune\Database\Tracks
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
@@ -1110,7 +1110,7 @@ abstract class Tracks implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Tracks
+     * @return $this|\Kitsune\Database\Tracks
      */
     public function setByPosition($pos, $value)
     {
@@ -1208,7 +1208,7 @@ abstract class Tracks implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Tracks The current object, for fluid interface
+     * @return $this|\Kitsune\Database\Tracks The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1333,7 +1333,7 @@ abstract class Tracks implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Tracks (or compatible) type.
+     * @param      object $copyObj An object of \Kitsune\Database\Tracks (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1362,7 +1362,7 @@ abstract class Tracks implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Tracks Clone of current object.
+     * @return \Kitsune\Database\Tracks Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)

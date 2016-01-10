@@ -1,6 +1,8 @@
 <?php
 
-use Base\Bans as BaseBans;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Bans as BaseBans;
 
 /**
  * Skeleton subclass for representing a row from the 'bans' table.

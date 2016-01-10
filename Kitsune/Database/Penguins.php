@@ -1,6 +1,8 @@
 <?php
 
-use Base\Penguins as BasePenguins;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Penguins as BasePenguins;
 
 /**
  * Skeleton subclass for representing a row from the 'penguins' table.

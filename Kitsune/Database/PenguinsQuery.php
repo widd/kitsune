@@ -1,6 +1,8 @@
 <?php
 
-use Base\PenguinsQuery as BasePenguinsQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\PenguinsQuery as BasePenguinsQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'penguins' table.

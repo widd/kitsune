@@ -1,12 +1,12 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \Penguins as ChildPenguins;
-use \PenguinsQuery as ChildPenguinsQuery;
 use \Exception;
 use \PDO;
-use Map\PenguinsTableMap;
+use Kitsune\Database\Penguins as ChildPenguins;
+use Kitsune\Database\PenguinsQuery as ChildPenguinsQuery;
+use Kitsune\Database\Map\PenguinsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -221,13 +221,13 @@ abstract class PenguinsQuery extends ModelCriteria
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\PenguinsQuery object.
+     * Initializes internal state of \Kitsune\Database\Base\PenguinsQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Penguins', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Kitsune\\Database\\Penguins', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }

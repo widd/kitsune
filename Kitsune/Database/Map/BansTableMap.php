@@ -1,9 +1,9 @@
 <?php
 
-namespace Map;
+namespace Kitsune\Database\Map;
 
-use \Bans;
-use \BansQuery;
+use Kitsune\Database\Bans;
+use Kitsune\Database\BansQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -34,7 +34,7 @@ class BansTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.BansTableMap';
+    const CLASS_NAME = 'Kitsune.Database.Map.BansTableMap';
 
     /**
      * The default database name for this class
@@ -49,12 +49,12 @@ class BansTableMap extends TableMap
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Bans';
+    const OM_CLASS = '\\Kitsune\\Database\\Bans';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Bans';
+    const CLASS_DEFAULT = 'Kitsune.Database.Bans';
 
     /**
      * The total number of columns
@@ -152,8 +152,8 @@ class BansTableMap extends TableMap
         $this->setName('bans');
         $this->setPhpName('Bans');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Bans');
-        $this->setPackage('');
+        $this->setClassName('\\Kitsune\\Database\\Bans');
+        $this->setPackage('Kitsune.Database');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
@@ -374,7 +374,7 @@ class BansTableMap extends TableMap
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Bans) { // it's a model object
+        } elseif ($values instanceof \Kitsune\Database\Bans) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks

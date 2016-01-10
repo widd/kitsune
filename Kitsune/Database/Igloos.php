@@ -1,6 +1,8 @@
 <?php
 
-use Base\Igloos as BaseIgloos;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Igloos as BaseIgloos;
 
 /**
  * Skeleton subclass for representing a row from the 'igloos' table.

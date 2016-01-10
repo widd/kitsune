@@ -1,11 +1,11 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \PenguinsQuery as ChildPenguinsQuery;
 use \Exception;
 use \PDO;
-use Map\PenguinsTableMap;
+use Kitsune\Database\PenguinsQuery as ChildPenguinsQuery;
+use Kitsune\Database\Map\PenguinsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,14 +23,14 @@ use Propel\Runtime\Parser\AbstractParser;
  *
  * 
  *
-* @package    propel.generator..Base
+* @package    propel.generator.Kitsune.Database.Base
 */
 abstract class Penguins implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\PenguinsTableMap';
+    const TABLE_MAP = '\\Kitsune\\Database\\Map\\PenguinsTableMap';
 
 
     /**
@@ -359,7 +359,7 @@ abstract class Penguins implements ActiveRecordInterface
     }
 
     /**
-     * Initializes internal state of Base\Penguins object.
+     * Initializes internal state of Kitsune\Database\Base\Penguins object.
      * @see applyDefaults()
      */
     public function __construct()
@@ -949,7 +949,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [id] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -969,7 +969,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [username] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setUsername($v)
     {
@@ -989,7 +989,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [nickname] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setNickname($v)
     {
@@ -1009,7 +1009,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [password] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setPassword($v)
     {
@@ -1029,7 +1029,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [loginkey] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setLoginkey($v)
     {
@@ -1049,7 +1049,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [confirmationhash] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setConfirmationhash($v)
     {
@@ -1069,7 +1069,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [swid] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setSwid($v)
     {
@@ -1089,7 +1089,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [avatar] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setAvatar($v)
     {
@@ -1109,7 +1109,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [avatarattributes] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setAvatarattributes($v)
     {
@@ -1129,7 +1129,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [email] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setEmail($v)
     {
@@ -1149,7 +1149,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [registrationdate] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setRegistrationdate($v)
     {
@@ -1173,7 +1173,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      * 
      * @param  boolean|integer|string $v The new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setModerator($v)
     {
@@ -1197,7 +1197,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [inventory] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setInventory($v)
     {
@@ -1217,7 +1217,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [careinventory] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setCareinventory($v)
     {
@@ -1237,7 +1237,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [coins] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setCoins($v)
     {
@@ -1257,7 +1257,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [igloo] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setIgloo($v)
     {
@@ -1277,7 +1277,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [igloos] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setIgloos($v)
     {
@@ -1297,7 +1297,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [floors] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setFloors($v)
     {
@@ -1317,7 +1317,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [locations] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setLocations($v)
     {
@@ -1337,7 +1337,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [furniture] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setFurniture($v)
     {
@@ -1357,7 +1357,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [color] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setColor($v)
     {
@@ -1377,7 +1377,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [head] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setHead($v)
     {
@@ -1397,7 +1397,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [face] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setFace($v)
     {
@@ -1417,7 +1417,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [neck] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setNeck($v)
     {
@@ -1437,7 +1437,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [body] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setBody($v)
     {
@@ -1457,7 +1457,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [hand] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setHand($v)
     {
@@ -1477,7 +1477,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [feet] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setFeet($v)
     {
@@ -1497,7 +1497,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [photo] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setPhoto($v)
     {
@@ -1517,7 +1517,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [flag] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setFlag($v)
     {
@@ -1537,7 +1537,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [walking] column.
      * 
      * @param int $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setWalking($v)
     {
@@ -1557,7 +1557,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [banned] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setBanned($v)
     {
@@ -1577,7 +1577,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [stamps] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setStamps($v)
     {
@@ -1597,7 +1597,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [stampbook] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setStampbook($v)
     {
@@ -1617,7 +1617,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [epf] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setEpf($v)
     {
@@ -1637,7 +1637,7 @@ abstract class Penguins implements ActiveRecordInterface
      * Set the value of [pufflequest] column.
      * 
      * @param string $v new value
-     * @return $this|\Penguins The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Penguins The current object (for fluent API support)
      */
     public function setPufflequest($v)
     {
@@ -1876,7 +1876,7 @@ abstract class Penguins implements ActiveRecordInterface
             return $startcol + 35; // 35 = PenguinsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Penguins'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Kitsune\\Database\\Penguins'), 0, $e);
         }
     }
 
@@ -2541,7 +2541,7 @@ abstract class Penguins implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Penguins
+     * @return $this|\Kitsune\Database\Penguins
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
@@ -2556,7 +2556,7 @@ abstract class Penguins implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Penguins
+     * @return $this|\Kitsune\Database\Penguins
      */
     public function setByPosition($pos, $value)
     {
@@ -2816,7 +2816,7 @@ abstract class Penguins implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Penguins The current object, for fluid interface
+     * @return $this|\Kitsune\Database\Penguins The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -3022,7 +3022,7 @@ abstract class Penguins implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Penguins (or compatible) type.
+     * @param      object $copyObj An object of \Kitsune\Database\Penguins (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -3078,7 +3078,7 @@ abstract class Penguins implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Penguins Clone of current object.
+     * @return \Kitsune\Database\Penguins Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)

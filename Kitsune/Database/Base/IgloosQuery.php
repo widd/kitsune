@@ -1,12 +1,12 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \Igloos as ChildIgloos;
-use \IgloosQuery as ChildIgloosQuery;
 use \Exception;
 use \PDO;
-use Map\IgloosTableMap;
+use Kitsune\Database\Igloos as ChildIgloos;
+use Kitsune\Database\IgloosQuery as ChildIgloosQuery;
+use Kitsune\Database\Map\IgloosTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -91,13 +91,13 @@ abstract class IgloosQuery extends ModelCriteria
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\IgloosQuery object.
+     * Initializes internal state of \Kitsune\Database\Base\IgloosQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Igloos', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Kitsune\\Database\\Igloos', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \BansQuery as ChildBansQuery;
 use \Exception;
 use \PDO;
-use Map\BansTableMap;
+use Kitsune\Database\BansQuery as ChildBansQuery;
+use Kitsune\Database\Map\BansTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,14 +23,14 @@ use Propel\Runtime\Parser\AbstractParser;
  *
  * 
  *
-* @package    propel.generator..Base
+* @package    propel.generator.Kitsune.Database.Base
 */
 abstract class Bans implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\BansTableMap';
+    const TABLE_MAP = '\\Kitsune\\Database\\Map\\BansTableMap';
 
 
     /**
@@ -117,7 +117,7 @@ abstract class Bans implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Bans object.
+     * Initializes internal state of Kitsune\Database\Base\Bans object.
      */
     public function __construct()
     {
@@ -415,7 +415,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [id] column.
      * 
      * @param int $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -435,7 +435,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [moderator] column.
      * 
      * @param string $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setModerator($v)
     {
@@ -455,7 +455,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [player] column.
      * 
      * @param int $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setPlayer($v)
     {
@@ -475,7 +475,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [comment] column.
      * 
      * @param string $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setComment($v)
     {
@@ -495,7 +495,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [expiration] column.
      * 
      * @param int $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setExpiration($v)
     {
@@ -515,7 +515,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [time] column.
      * 
      * @param int $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setTime($v)
     {
@@ -535,7 +535,7 @@ abstract class Bans implements ActiveRecordInterface
      * Set the value of [type] column.
      * 
      * @param int $v new value
-     * @return $this|\Bans The current object (for fluent API support)
+     * @return $this|\Kitsune\Database\Bans The current object (for fluent API support)
      */
     public function setType($v)
     {
@@ -618,7 +618,7 @@ abstract class Bans implements ActiveRecordInterface
             return $startcol + 7; // 7 = BansTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Bans'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Kitsune\\Database\\Bans'), 0, $e);
         }
     }
 
@@ -1003,7 +1003,7 @@ abstract class Bans implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Bans
+     * @return $this|\Kitsune\Database\Bans
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
@@ -1018,7 +1018,7 @@ abstract class Bans implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Bans
+     * @return $this|\Kitsune\Database\Bans
      */
     public function setByPosition($pos, $value)
     {
@@ -1110,7 +1110,7 @@ abstract class Bans implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Bans The current object, for fluid interface
+     * @return $this|\Kitsune\Database\Bans The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1232,7 +1232,7 @@ abstract class Bans implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Bans (or compatible) type.
+     * @param      object $copyObj An object of \Kitsune\Database\Bans (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1260,7 +1260,7 @@ abstract class Bans implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Bans Clone of current object.
+     * @return \Kitsune\Database\Bans Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)

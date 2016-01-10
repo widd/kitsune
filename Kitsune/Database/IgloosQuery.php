@@ -1,6 +1,8 @@
 <?php
 
-use Base\IgloosQuery as BaseIgloosQuery;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\IgloosQuery as BaseIgloosQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'igloos' table.

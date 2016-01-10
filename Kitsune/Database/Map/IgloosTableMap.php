@@ -1,9 +1,9 @@
 <?php
 
-namespace Map;
+namespace Kitsune\Database\Map;
 
-use \Igloos;
-use \IgloosQuery;
+use Kitsune\Database\Igloos;
+use Kitsune\Database\IgloosQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -34,7 +34,7 @@ class IgloosTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.IgloosTableMap';
+    const CLASS_NAME = 'Kitsune.Database.Map.IgloosTableMap';
 
     /**
      * The default database name for this class
@@ -49,12 +49,12 @@ class IgloosTableMap extends TableMap
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Igloos';
+    const OM_CLASS = '\\Kitsune\\Database\\Igloos';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Igloos';
+    const CLASS_DEFAULT = 'Kitsune.Database.Igloos';
 
     /**
      * The total number of columns
@@ -162,8 +162,8 @@ class IgloosTableMap extends TableMap
         $this->setName('igloos');
         $this->setPhpName('Igloos');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Igloos');
-        $this->setPackage('');
+        $this->setClassName('\\Kitsune\\Database\\Igloos');
+        $this->setPackage('Kitsune.Database');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('ID', 'Id', 'INTEGER', true, 10, null);
@@ -390,7 +390,7 @@ class IgloosTableMap extends TableMap
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Igloos) { // it's a model object
+        } elseif ($values instanceof \Kitsune\Database\Igloos) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks

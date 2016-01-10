@@ -1,6 +1,8 @@
 <?php
 
-use Base\Tracks as BaseTracks;
+namespace Kitsune\Database;
+
+use Kitsune\Database\Base\Tracks as BaseTracks;
 
 /**
  * Skeleton subclass for representing a row from the 'tracks' table.

@@ -1,12 +1,12 @@
 <?php
 
-namespace Base;
+namespace Kitsune\Database\Base;
 
-use \Tracks as ChildTracks;
-use \TracksQuery as ChildTracksQuery;
 use \Exception;
 use \PDO;
-use Map\TracksTableMap;
+use Kitsune\Database\Tracks as ChildTracks;
+use Kitsune\Database\TracksQuery as ChildTracksQuery;
+use Kitsune\Database\Map\TracksTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -86,13 +86,13 @@ abstract class TracksQuery extends ModelCriteria
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Base\TracksQuery object.
+     * Initializes internal state of \Kitsune\Database\Base\TracksQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Tracks', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Kitsune\\Database\\Tracks', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
