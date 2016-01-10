@@ -1,7 +1,6 @@
 <?php
 
 namespace Kitsune\ClubPenguin;
-use Kitsune\BindException;
 
 date_default_timezone_set("America/Los_Angeles");
 
