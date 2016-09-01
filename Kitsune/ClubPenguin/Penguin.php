@@ -6,6 +6,11 @@ use Kitsune;
 use Kitsune\Logging\Logger;
 
 class Penguin {
+	
+	public $table = null;
+
+	public $waddleId = null;
+	public $waddle = "";
 
 	public $id;
 	public $username;
