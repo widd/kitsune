@@ -123,7 +123,7 @@ final class World extends ClubPenguin {
 			
 			"pt#spts" => "handleAvatarTransformation",
 			
-			"w#jx" => "handleJoinWaddle",
+			"w#jx" => "AddPlayerToWaddle",
 			
 			"a#gt" => "handleGetTablePopulation",
 			"a#jt" => "handleJoinTable",
@@ -142,17 +142,19 @@ final class World extends ClubPenguin {
 		),
 		
 		"z" => array(
-			"gz" => "handleGetGame",
-			"m" => "handleGameMove",
-			"zo" => "handleGameOver",
+			"gz" => "GetGame",
+			//"m" => "handleGameMove",  // Added in Games
+			//"zo" => "GameOver", // Added in Games
 			
-			"gw" => "handleGetWaddlesPopulationById",
-			"jw" => "handleSendJoinWaddleById",
-			"lw" => "handleLeaveWaddle",
-			"jz" => "handleStartGame",
-			"lz" => "handleQuitGame",
+			"gw" => "GetWaddles",
+			"jw" => "JoinPlayerWaddle",
+			"lw" => "ReleasePlayerWaddle",
+			"jz" => "JoinGame",
+			"lz" => "LeaveGame",
+
+			"uz" => "UpdateGame",
 			
-			"zm" => "handleSendMove"
+			"zm" => "SendMove",
 		)
 	);
 	
@@ -172,9 +174,9 @@ final class World extends ClubPenguin {
 	use Handlers\Play\PlayerTransformation;
 	use Handlers\Play\Music;
 	
-	use Handlers\Game\General;
-	use Handlers\Game\Multiplayer;
-	use Handlers\Game\Waddle;	
+	use Handlers\Game\Games;
+	use Handlers\Game\Four;
+	use Handlers\Game\Mancala;
 	
 	public $items = array();
 	public $pins = array();
