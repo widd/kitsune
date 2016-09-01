@@ -219,7 +219,7 @@ final class World extends ClubPenguin {
 		
 		$rooms = $downloadAndDecode("http://media1.clubpenguin.com/play/en/web_service/game_configs/rooms.json");
 		foreach($rooms as $room => $details) {
-			$this->rooms[$room] = new Room($room, sizeof($this->rooms) + 1, ($details['path'] == '' ? true : false));
+			$this->rooms[$room] = new Room($room, sizeof($this->rooms) + 1, ($details['room_key'] == '' ? true : false));
 		}
 		
 		$stamps = $downloadAndDecode("http://media1.clubpenguin.com/play/en/web_service/game_configs/stamps.json");
