@@ -6,13 +6,27 @@ final class Hashing {
 
 	private static $characterSet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789`~@#$()_+-={}|[]:,.";
 	
-	public static function generateRandomKey() {
-		$keyLength = mt_rand(7, 10);
-		$randomKey = "";
-		
-		foreach(range(0, $keyLength) as $currentLength) {
-			$randomKey .= substr(self::$characterSet, mt_rand(0, strlen(self::$characterSet)), 1);
+	public static function generateRandomInt($min, $max) {
+		static $csrngSupported; //Static to save CPU cycles
+
+		if(is_null($csrngSupported)) {
+			$csrngSupported = function_exists('random_int');
 		}
+
+		if($csrngSupported) { //PHP7
+			return random_int($min, $max);
+		} else {
+			return mt_rand($min, $max);
+		}
+	}
+	
+	public static function generateRandomKey() {
+		$keyLength = self::generateRandomInt(7, 10);
+		$randomKey = "";
+
+		srand(self::generateRandomInt(0, 2147483647));
+		$strRandomized = str_shuffle(self::$characterSet);
+		$randomKey = substr($strRandomized, 0, $keyLength);
 		
 		return $randomKey;
 	}
