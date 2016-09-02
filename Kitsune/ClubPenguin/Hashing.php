@@ -7,7 +7,7 @@ final class Hashing {
 	private static $characterSet = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789`~@#$()_+-={}|[]:,.";
 	
 	public static function generateRandomInt($min, $max) {
-		static $csrngSupported;
+		static $csrngSupported; //Static to save CPU cycles
 
 		if(is_null($csrngSupported)) {
 			$csrngSupported = function_exists('random_int');
