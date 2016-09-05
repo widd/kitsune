@@ -46,7 +46,7 @@ final class Events {
 	}
 
 	// Interval in seconds
-	public static function AppendInterval($interval, $callable) {
+	public static function AppendInterval($interval, $callable) { //Timed events do not fire on first tick after adding
 		$eventArray = [$callable, $interval, null];
 		array_push(self::$timedEvents, $eventArray);
 
@@ -57,27 +57,24 @@ final class Events {
 	// Adds event and/or event callable
 	public static function Append($event, $callable) {
 		if(array_key_exists($event, self::$events)) {
-			array_push(self::$events, $callable);
+			array_push(self::$events[$event], $callable);
 		} else {
 			self::$events[$event] = array($callable);
 		}
 
-		$callableIndex = array_search($callable, self::$events);
+		$callableIndex = array_search($callable, self::$events[$event]);
 
 		return $callableIndex;
 	}
 
-	// Removes event, or event callable (by index)
-	public static function Remove($event, $callableIndex = null) {
+	// Removes event callable (by index)
+	public static function Remove($event, $callableIndex) {
 		if(array_key_exists($event, self::$events)) {
-			if($callableIndex === null) {
-				unset(self::$events[$event]);
+
+			if(array_key_exists($callableIndex, self::$events[$event])) {
+				unset(self::$events[$event][$callableIndex]);
 			} else {
-				if(array_key_exists($callableIndex, self::$events[$event])){
-					unset(self::$events[$event][$callableIndex]);
-				} else {
-					return false;
-				}
+				return false;
 			}
 
 			return true;
