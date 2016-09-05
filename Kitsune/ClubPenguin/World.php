@@ -389,6 +389,7 @@ final class World extends ClubPenguin {
 	}
 	
 	protected function removePenguin($penguin) {
+		Events::Fire("quit", $penguin);
 		// Remove the penguin from igloo maps if included.
 		if(isset($this->openIgloos[$penguin->id])) {
 			unset($this->openIgloos[$penguin->id]);

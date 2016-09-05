@@ -86,9 +86,13 @@ final class Events {
 	public static function Fire($event, $data = null) {
 		if(array_key_exists($event, self::$events)) {
 			foreach(self::$events[$event] as $eventCallable) {
-				call_user_func($eventCallable, $data);
+				$canContinue = call_user_func($eventCallable, $data);
+				if(!$canContinue) {
+					return false; //Callable says deny the action
+				}
 			}
 		}
+		return true; //Action can continue
 	}
 
 	// Clears the entire event array
