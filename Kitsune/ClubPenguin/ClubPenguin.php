@@ -212,8 +212,7 @@ abstract class ClubPenguin extends Kitsune\Kitsune {
 		$penguin = $this->penguins[$socket];
 
 		if($penguin->handshakeStep === "versionCheck") {
-			$penguin->randomKey = Hashing::generateRandomKey();
-			$penguin->send("<msg t='sys'><body action='rndK' r='-1'><k>" . $penguin->randomKey . "</k></body></msg>");
+			$penguin->send("<msg t='sys'><body action='rndK' r='-1'><k>e4a2dbcca10a7246817a83cd" . $penguin->username . "</k></body></msg>");
 			$penguin->handshakeStep = "randomKey";
 
 			return true;
