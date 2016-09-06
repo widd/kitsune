@@ -18,6 +18,8 @@ abstract class Plugin implements IPlugin {
 	public $worldStalker = false;
 	
 	public $loginServer = false;
+
+	public $eventBinder = false;
 	
 	protected $server = null;
 	
@@ -26,21 +28,19 @@ abstract class Plugin implements IPlugin {
 	protected function __construct($pluginName) {
 		$readableName = basename($pluginName);
 		
-		if($this->server == null) {
-			Logger::Warn("$readableName didn't set a server object");
+		if($this->eventBinder !== true) {
+			if(empty($this->xmlHandlers)) {
+				$this->loginStalker = true;
+			}
+
+			if(empty($this->worldHandlers)) {
+				$this->worldStalker = true;
+			}
 		}
-		
-		if(empty($this->xmlHandlers)) {
-			$this->loginStalker = true;
-		}
-		
-		if(empty($this->worldHandlers)) {
-			$this->worldStalker = true;
-		}
-		
+
 		$this->pluginName = $readableName;
 	}
-	
+
 	abstract public function onReady();
 	
 	public function handleXmlPacket($penguin, $beforeCall = true) {

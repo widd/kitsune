@@ -59,7 +59,7 @@ abstract class ClubPenguin extends Kitsune\Kitsune {
 		
 		$removePlugin = false;
 		
-		if(empty($this->worldHandlers) && $pluginObject->loginServer !== true) {		
+		if(empty($this->worldHandlers) && $pluginObject->loginServer !== true && $pluginObject->eventBinder !== true) {
 			unset($this->loadedPlugins[$pluginClass]);
 			
 			unset($pluginObject);
