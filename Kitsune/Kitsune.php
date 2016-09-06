@@ -46,7 +46,10 @@ abstract class Kitsune extends Spirit {
 			if(Packet::$IsXML) {
 				$this->handleXmlPacket($socket);
 			} else {
-				$this->handleWorldPacket($socket);
+				$Packet = Events::Fire('packet', $socket);
+				if($Packet !== false) {
+					$this->handleWorldPacket($socket);
+				}
 			}
 		}
 
