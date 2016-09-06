@@ -27,14 +27,15 @@ final class Login extends ClubPenguin {
 		$password = Packet::$Data['body']['login']['pword'];
 		
 		if($penguin->database->usernameExists($username) === false) {
+			password_verify('KitsuneTimingAttack', '$2y$12$5hf7vOtBjsNJf6oZSsnyXOlcLTRblTwSg550SR0ohxVUkItmXhMM6'); //Mitigate timing attacks
 			$penguin->send("%xt%e%-1%101%");
 			return $this->removePenguin($penguin);
 		}
 		
 		$penguinData = $penguin->database->getColumnsByName($username, array("ID", "Username", "Password", "SWID", "Email", "Banned"));
-		$encryptedPassword = Hashing::getLoginHash($penguinData["Password"], $penguin->randomKey);
+		$encryptedPassword = $penguinData["Password"];
 		
-		if($encryptedPassword != $password) {
+		if(password_verify($password, $encryptedPassword) !== true) {
 			$penguin->send("%xt%e%-1%101%");
 			return $this->removePenguin($penguin);
 		} elseif($penguinData["Banned"] > strtotime("now") || $penguinData["Banned"] == "perm") {
