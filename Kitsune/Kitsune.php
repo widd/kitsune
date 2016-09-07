@@ -12,7 +12,11 @@ abstract class Kitsune extends Spirit {
 	public $penguins = array();
 	
 	protected function handleAccept($socket) {
-		Events::Fire("accept", $socket);
+		$Accept = Events::Fire("accept", $socket);
+		if(!$Accept) {
+			Logger::Notice("Plugin denied client accept");
+			$this->removeClient($socket);
+		}
 
 		$newPenguin = new Penguin($socket);
 		$this->penguins[$socket] = $newPenguin;
@@ -26,7 +30,10 @@ abstract class Kitsune extends Spirit {
 	}
 	
 	protected function handleReceive($socket, $data) {
-		Events::Fire("receive", [$socket, $data]);
+		$Receive = Events::Fire("receive", [$socket, $data]);
+		if(!$Receive) { //Good for filters to tell server to ignore packet
+			return false;
+		}
 
 		$chunkedArray = explode("\0", $data);
 		array_pop($chunkedArray);
@@ -39,7 +46,10 @@ abstract class Kitsune extends Spirit {
 			if(Packet::$IsXML) {
 				$this->handleXmlPacket($socket);
 			} else {
-				$this->handleWorldPacket($socket);
+				$Packet = Events::Fire('packet', $socket);
+				if($Packet !== false) {
+					$this->handleWorldPacket($socket);
+				}
 			}
 		}
 
