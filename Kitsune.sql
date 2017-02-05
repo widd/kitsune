@@ -64,7 +64,7 @@ CREATE TABLE `penguins` (
   `ID` int(10) UNSIGNED NOT NULL,
   `Username` char(12) NOT NULL,
   `Nickname` char(16) NOT NULL,
-  `Password` char(32) NOT NULL,
+  `Password` char(255) NOT NULL,
   `LoginKey` char(32) NOT NULL,
   `ConfirmationHash` char(32) NOT NULL,
   `SWID` char(38) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
