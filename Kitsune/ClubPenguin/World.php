@@ -2,6 +2,7 @@
 
 namespace Kitsune\ClubPenguin;
 
+use Kitsune\Events;
 use Kitsune\Logging\Logger;
 use Kitsune\ClubPenguin\Handlers;
 use Kitsune\ClubPenguin\Packets\Packet;
