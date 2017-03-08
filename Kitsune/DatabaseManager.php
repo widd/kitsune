@@ -6,69 +6,39 @@ use Kitsune\Logging\Logger;
 
 class DatabaseManager {
 
-	public $databaseConnections = array();
-	public $penguinsByDatabases = array();
+	private $penguins = array();
+	private $databaseConnection = null;
 
-	// Returns database index
+	public function __construct() {
+		// Check connection - if it fails the server will automatically stop
+		$tempDatabase = new Database();
+		unset($tempDatabase);
+	}
+
 	public function add($penguin) {
-		Logger::Debug("Adding penguino");
+		Logger::Debug('Attributing database to Penguin object');
 
-		if(empty($this->databaseConnections)) {
-			$databaseIndex = $this->createDatabase();
-			$this->penguinsByDatabases[$databaseIndex][] = $penguin;
-		} else {
-			$databaseIndex = $this->getOpenDatabase();
-			$this->penguinsByDatabases[$databaseIndex][] = $penguin;
+		if($this->databaseConnection === null) {
+			$this->databaseConnection = new Database();
+			Logger::Debug('Database connection established');
 		}
 
-		$penguin->database = $this->databaseConnections[$databaseIndex];
-
-		return $databaseIndex;
+		$penguin->database = $this->databaseConnection;
+		$this->penguins[] = $penguin;
 	}
 
 	public function remove($penguin) {
-		Logger::Debug("Removing penguino");
+		Logger::Debug('Nullifying Penguin object\'s database property');
 
-		foreach($this->penguinsByDatabases as $databaseIndex => $penguinArray) {
-			if(($penguinIndex = array_search($penguin, $penguinArray)) !== false) {
-				Logger::Debug("Penguino found! Removing");
+		$penguin->database = null;
 
-				unset($this->penguinsByDatabases[$databaseIndex][$penguinIndex]);
+		$penguinKey = array_search($penguin, $this->penguins);
+		unset($this->penguins[$penguinKey]);
 
-				if(count($this->penguinsByDatabases[$databaseIndex]) == 0) {
-					Logger::Info("Removing empty database object");
-
-					unset($this->penguinsByDatabases[$databaseIndex]);
-					unset($this->databaseConnections[$databaseIndex]);
-				}
-
-				return true;
-			} else {
-				Logger::Debug("Sorry, penguino not found. :-( $penguinIndex");
-			}
+		if(count($this->penguins) === 0) {
+			$this->databaseConnection = null;
 		}
 	}
-
-	private function getOpenDatabase() {
-		foreach($this->penguinsByDatabases as $databaseIndex => $penguinArray) {
-			if(count($this->penguinsByDatabases[$databaseIndex]) < 20) {
-				return $databaseIndex;
-			} else {
-				return $this->createDatabase();
-			}
-		}
-	}
-
-	private function createDatabase() {
-		$newDatabase = new Database();
-		$this->databaseConnections[] = $newDatabase;
-		$databaseIndex = array_search($newDatabase, $this->databaseConnections);
-
-		Logger::Debug("New database created");
-
-		return $databaseIndex;
-	}
-	
 
 }
 

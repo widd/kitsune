@@ -26,9 +26,6 @@ abstract class ClubPenguin extends Kitsune\Kitsune {
 	public $loadedPlugins = array();
 	
 	protected function __construct($loadPlugins = true, $pluginsDirectory = "Kitsune/ClubPenguin/Plugins/") {
-		$tempDatabase = new Kitsune\Database();
-		unset($tempDatabase);
-
 		$this->databaseManager = new DatabaseManager();
 		
 		if($loadPlugins === true) {
@@ -212,7 +209,8 @@ abstract class ClubPenguin extends Kitsune\Kitsune {
 		$penguin = $this->penguins[$socket];
 
 		if($penguin->handshakeStep === "versionCheck") {
-			$penguin->send("<msg t='sys'><body action='rndK' r='-1'><k>e4a2dbcca10a7246817a83cd" . $penguin->username . "</k></body></msg>");
+			$penguin->randomKey = "e4a2dbcca10a7246817a83cd" . $penguin->username;
+			$penguin->send("<msg t='sys'><body action='rndK' r='-1'><k>" . $penguin->randomKey . "</k></body></msg>");
 			$penguin->handshakeStep = "randomKey";
 
 			return true;
