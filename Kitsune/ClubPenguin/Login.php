@@ -33,9 +33,9 @@ final class Login extends ClubPenguin {
 		}
 		
 		$penguinData = $penguin->database->getColumnsByName($username, array("ID", "Username", "Password", "SWID", "Email", "Banned"));
-		$encryptedPassword = $penguinData["Password"];
+		$encryptedPassword = Hashing::getLoginHash($penguinData["Password"], $penguin->randomKey);
 		
-		if(password_verify($password, $encryptedPassword) !== true) {
+		if(password_verify($password, $penguinData["Password"]) !== true) {
 			$penguin->send("%xt%e%-1%101%");
 			return $this->removePenguin($penguin);
 		} elseif($penguinData["Banned"] > strtotime("now") || $penguinData["Banned"] == "perm") {
